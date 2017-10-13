@@ -1,4 +1,4 @@
-angular.module("e_catpers.services", [])
+angular.module("m.services", [])
 // TODO: --|---- directive
 	
 	
@@ -323,7 +323,7 @@ angular.module("e_catpers.services", [])
 		link: function($scope, $element, $attr){
 			var starty = $scope.$eval($attr.headerShrink) || 0;
 			var shrinkAmt;
-			var header = $document[0].body.querySelector(".page-title");
+			var header = $document[0].body.querySelector(".navbar-title");
 			var headerHeight = $attr.offsetHeight || 44;
 			$element.bind("scroll", function(e){
 				var scrollTop = null;
@@ -440,6 +440,27 @@ angular.module("e_catpers.services", [])
 		}
 	};
 })
+// TODO: --|-------- run-app-facebook
+/** required: cordova-plugin-whitelist, cordova-plugin-inappbrowser **/
+.directive("runAppFacebook", function(){
+	return {
+			controller: function($scope, $element, $attrs){
+			$element.bind("click", runApp);
+			function runApp(event)
+			{
+				var textLink = window.encodeURIComponent($attrs.link) || "http://ihsana.com/";
+				if (ionic.Platform.isIOS()){
+					var urlSchema = 'fbapi20130214://dialog/share?app_id=966242223397117&version=20130410&method_args={"name":null,"description":null,"link":"' + textLink + '"}' ;
+				}else if(ionic.Platform.isAndroid()){
+					var urlSchema = "fb://faceweb/f?href=https://facebook.com/sharer/sharer.php?u=" + textLink;
+				}else{
+					var urlSchema = "https://facebook.com/sharer/sharer.php?u=" + textLink;
+				}
+				window.open(urlSchema,"_system","location=yes");
+			};
+		}
+	};
+})
 // TODO: --|-------- run-app-whatsapp
 /** required: cordova-plugin-whitelist, cordova-plugin-inappbrowser **/
 .directive("runAppWhatsapp", function(){
@@ -540,10 +561,10 @@ angular.module("e_catpers.services", [])
 				{
 					titleText: 'Share This',
 					buttons: [
-						{ text: '<i class="ion-social-facebook"></i> Facebook'},
-						{ text: '<i class="ion-social-twitter"></i> Twitter'},
-						{ text: '<i class="ion-social-whatsapp"></i> Whatsapp'},
-						{ text: '<i class="icon-left ion-ios-chatbubble"></i> Line'},
+						{ text: '<i class="icon ion-social-facebook"></i> <b>Facebook</b>'},
+						{ text: '<i class="icon ion-social-twitter"></i> <b>Twitter</b>'},
+						{ text: '<i class="icon ion-social-whatsapp"></i> <b>Whatsapp</b>'},
+						{ text: '<i class="icon ion-ios-chatbubble"></i> <b>Line</b>'},
 						],
 					cancelText: 'Cancel',
 					cancel: function(){
@@ -555,7 +576,13 @@ angular.module("e_catpers.services", [])
 						{
 							case 0:
 								var textMessage = window.encodeURIComponent($attrs.message) || "";
-								var urlSchema = "https://facebook.com/sharer/sharer.php?u=" + textMessage;
+								if (ionic.Platform.isIOS()){
+									var urlSchema = 'fbapi20130214://dialog/share?app_id=966242223397117&version=20130410&method_args={"name":null,"description":null,"link":"' + textMessage + '"}' ;
+								}else if(ionic.Platform.isAndroid()){
+									var urlSchema = "fb://faceweb/f?href=https://facebook.com/sharer/sharer.php?u=" + textMessage;
+								}else{
+									var urlSchema = "https://facebook.com/sharer/sharer.php?u=" + textMessage;
+								}
 								window.open(urlSchema, "_system", "location=yes");
 								break;
 							case 1:
@@ -585,3 +612,14 @@ angular.module("e_catpers.services", [])
 	};
 })
 				
+
+
+
+document.onclick = function (e){
+	e = e ||  window.event;
+	var element = e.target || e.srcElement;
+	if (element.target == "_blank") {
+		window.open(element.href, "_blank", "location=yes");
+		return false;
+	}
+};

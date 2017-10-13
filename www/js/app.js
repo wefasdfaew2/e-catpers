@@ -1,9 +1,9 @@
-angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","ion-datetime-picker","ionic.rating","utf8-base64","angular-md5","chart.js","e_catpers.controllers", "e_catpers.services"])
+angular.module("m", ["ngCordova","ionic","ionMdInput","ionic-material","ion-datetime-picker","ionic.rating","utf8-base64","angular-md5","chart.js","ngMap","m.controllers", "m.services"])
 	.run(function($ionicPlatform,$window,$interval,$timeout,$ionicHistory,$ionicPopup,$state,$rootScope){
 
-		$rootScope.appName = "e-Catpers" ;
-		$rootScope.appLogo = "data/images/header/logo.png" ;
-		$rootScope.appVersion = "1177" ;
+		$rootScope.appName = "Lapor Propam" ;
+		$rootScope.appLogo = "data/images/icon/icon.png" ;
+		$rootScope.appVersion = "11.79" ;
 
 		$ionicPlatform.ready(function() {
 			//required: cordova plugin add ionic-plugin-keyboard --save
@@ -17,17 +17,25 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 				StatusBar.styleDefault();
 			}
 
-			//required: cordova plugin add cordova-plugin-network-information --save
-			$interval(function(){
-				if ( typeof navigator == "object" && typeof navigator.connection != "undefined"){
-					var networkState = navigator.connection.type;
-					if (networkState == "none") {
-						$window.location = "retry.html";
-					}
-				}
-			}, 5000);
+			localforage.config({
+				driver : [localforage.WEBSQL,localforage.INDEXEDDB,localforage.LOCALSTORAGE],
+				name : "m",
+				storeName : "m",
+				description : "The offline datastore for m app"
+			});
+
+
 
 		});
+		$ionicPlatform.registerBackButtonAction(function (e){
+			if($ionicHistory.backView()){
+				$ionicHistory.goBack();
+			}else{
+				$state.go("m.utama");
+			}
+			e.preventDefault();
+			return false;
+		},101);
 	})
 
 
@@ -115,29 +123,33 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 
 
 
-.config(function($stateProvider, $urlRouterProvider,$sceDelegateProvider,$httpProvider,$ionicConfigProvider){
+
+.config(function($stateProvider,$urlRouterProvider,$sceDelegateProvider,$ionicConfigProvider,$httpProvider){
+	/** tabs position **/
+	$ionicConfigProvider.tabs.position("bottom"); 
 	try{
-		// Domain Whitelist
+	// Domain Whitelist
 		$sceDelegateProvider.resourceUrlWhitelist([
 			"self",
+			new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$'),
+			new RegExp('^(http[s]?):\/\/(w{3}.)?w3schools\.com/.+$'),
 			new RegExp('^(http[s]?):\/\/(w{3}.)?bidpropamkaltim\.com/.+$'),
 		]);
 	}catch(err){
 		console.log("%cerror: %cdomain whitelist","color:blue;font-size:16px;","color:red;font-size:16px;");
 	}
 	$stateProvider
-	.state("e_catpers",{
-		url: "/e_catpers",
-			abstract: true,
-			templateUrl: "templates/e_catpers-side_menus.html",
-			controller: "side_menusCtrl",
+	.state("m",{
+		url: "/m",
+		abstract: true,
+		templateUrl: "templates/m-tabs.html",
 	})
 
-	.state("e_catpers.about_us", {
+	.state("m.about_us", {
 		url: "/about_us",
 		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-about_us.html",
+			"m-about_us" : {
+						templateUrl:"templates/m-about_us.html",
 						controller: "about_usCtrl"
 					},
 			"fabButtonUp" : {
@@ -146,24 +158,11 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 		}
 	})
 
-	.state("e_catpers.catpers", {
-		url: "/catpers",
-		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-catpers.html",
-						controller: "catpersCtrl"
-					},
-			"fabButtonUp" : {
-						template: '',
-					},
-		}
-	})
-
-	.state("e_catpers.dashboard", {
+	.state("m.dashboard", {
 		url: "/dashboard",
 		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-dashboard.html",
+			"m-dashboard" : {
+						templateUrl:"templates/m-dashboard.html",
 						controller: "dashboardCtrl"
 					},
 			"fabButtonUp" : {
@@ -172,11 +171,24 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 		}
 	})
 
-	.state("e_catpers.faqs", {
+	.state("m.dpo", {
+		url: "/dpo",
+		views: {
+			"m-dpo" : {
+						templateUrl:"templates/m-dpo.html",
+						controller: "dpoCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.faqs", {
 		url: "/faqs",
 		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-faqs.html",
+			"m-faqs" : {
+						templateUrl:"templates/m-faqs.html",
 						controller: "faqsCtrl"
 					},
 			"fabButtonUp" : {
@@ -185,11 +197,117 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 		}
 	})
 
-	.state("e_catpers.menu_2", {
+	.state("m.form_laporanmasyarakat", {
+		url: "/form_laporanmasyarakat",
+		views: {
+			"m-form_laporanmasyarakat" : {
+						templateUrl:"templates/m-form_laporanmasyarakat.html",
+						controller: "form_laporanmasyarakatCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.form_masyarakat_saran", {
+		url: "/form_masyarakat_saran",
+		views: {
+			"m-form_masyarakat_saran" : {
+						templateUrl:"templates/m-form_masyarakat_saran.html",
+						controller: "form_masyarakat_saranCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.help", {
+		url: "/help",
+		views: {
+			"m-help" : {
+						templateUrl:"templates/m-help.html",
+						controller: "helpCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.informasi", {
+		url: "/informasi/:categories",
+		cache:false,
+		views: {
+			"m-informasi" : {
+						templateUrl:"templates/m-informasi.html",
+						controller: "informasiCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.informasi_singles", {
+		url: "/informasi_singles/:id",
+		cache:false,
+		views: {
+			"m-informasi" : {
+						templateUrl:"templates/m-informasi_singles.html",
+						controller: "informasi_singlesCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.kritik_saran", {
+		url: "/kritik_saran",
+		views: {
+			"m-kritik_saran" : {
+						templateUrl:"templates/m-kritik_saran.html",
+						controller: "kritik_saranCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.lapor_propam", {
+		url: "/lapor_propam",
+		views: {
+			"m-lapor_propam" : {
+						templateUrl:"templates/m-lapor_propam.html",
+						controller: "lapor_propamCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.menu_1", {
+		url: "/menu_1",
+		views: {
+			"m-menu_1" : {
+						templateUrl:"templates/m-menu_1.html",
+						controller: "menu_1Ctrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.menu_2", {
 		url: "/menu_2",
 		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-menu_2.html",
+			"m-menu_2" : {
+						templateUrl:"templates/m-menu_2.html",
 						controller: "menu_2Ctrl"
 					},
 			"fabButtonUp" : {
@@ -198,11 +316,37 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 		}
 	})
 
-	.state("e_catpers.slide_tab_menu", {
+	.state("m.opsi", {
+		url: "/opsi",
+		views: {
+			"m-opsi" : {
+						templateUrl:"templates/m-opsi.html",
+						controller: "opsiCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.ptdh", {
+		url: "/ptdh",
+		views: {
+			"m-ptdh" : {
+						templateUrl:"templates/m-ptdh.html",
+						controller: "ptdhCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.slide_tab_menu", {
 		url: "/slide_tab_menu",
 		views: {
-			"e_catpers-side_menus" : {
-						templateUrl:"templates/e_catpers-slide_tab_menu.html",
+			"m-slide_tab_menu" : {
+						templateUrl:"templates/m-slide_tab_menu.html",
 						controller: "slide_tab_menuCtrl"
 					},
 			"fabButtonUp" : {
@@ -211,5 +355,31 @@ angular.module("e_catpers", ["ngCordova","ionic","ionMdInput","ionic-material","
 		}
 	})
 
-	$urlRouterProvider.otherwise("/e_catpers/catpers");
+	.state("m.sp2hp", {
+		url: "/sp2hp",
+		views: {
+			"m-sp2hp" : {
+						templateUrl:"templates/m-sp2hp.html",
+						controller: "sp2hpCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	.state("m.utama", {
+		url: "/utama",
+		views: {
+			"m-utama" : {
+						templateUrl:"templates/m-utama.html",
+						controller: "utamaCtrl"
+					},
+			"fabButtonUp" : {
+						template: '',
+					},
+		}
+	})
+
+	$urlRouterProvider.otherwise("/m/utama");
 });

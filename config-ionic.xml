@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.imabuilder.justsandy.ecatpers" version="1177.170815" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-	<name>e-Catpers</name>
-	<description>e-Catpers</description>
-	<author email="satria.maya@gmail.com" href="https://www.justsandy.id">JustSandy</author>
+<widget id="com.bidpropamkaltim.m" version="11.79.171013" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+	<name>Lapor Propam</name>
+	<description>Lapor Propam adalah aplikasi layanan publik berbasis android yang diluncurkan oleh subbid paminal bidpropam polda kaltim untuk menyampaikan informasi berindikasikan pelanggaran dan penyimpangan yang dilakukan oleh anggota Polri di wilayah hukum Polda Kaltim.</description>
+	<author email="me@justsandy.id" href="https://www.bidpropamkaltim.com">JustSandy</author>
 	<content src="index.html" />
 	<!-- Network Request Whitelist -->
 	<access origin="*" />
@@ -32,6 +32,7 @@
 	<allow-intent href="line:*" />
 	<allow-intent href="twitter:*" />
 	<allow-intent href="fb:*" />
+	<allow-intent href="fbapi20130214:*" />
 	<allow-intent href="skype:*" />
 	<platform name="android">
 		<allow-intent href="market:*" />
@@ -68,8 +69,8 @@
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="ionic-plugin-keyboard" />
 	<!-- ./default -->
+	<plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-inappbrowser" />
-	<plugin name="cordova-plugin-network-information" />
 	<platform name="android">
 		<!-- splash and icon for build using ionic/cordova -->
 		<icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />

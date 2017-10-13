@@ -209,20 +209,62 @@ ul.rating li i{color:#FFCC00}
 .rotate270 {-webkit-transform: rotate(270deg); transform: rotate(270deg);}
 .fixed { position: fixed; top: 0; left: calc(50% - 480px); z-index: 100; width: 100%; padding: 1em; background: rgba(238, 238, 238,.9); width: 960px;}
 /** header **/
-
+.bar-images{background: transparent !important; background-image:url("../data/images/header/header0.jpg") !important; color:#ffffff; background-position: left top !important; background-repeat: no-repeat !important; background-size: cover !important;overflow: hidden;}
 /** menu **/
-.menu .bar.bar-header.expanded{background-image: url("../data/images/header/header0.jpg");background-size: 120%;background-position:0%;transition: all .5s ease-in-out;}
-.menu .bar.bar-header.expanded img{margin:auto;left:16px;right:16px;}
 
 /** option page **/
-#page-dashboard{background: url("../data/images/background/bg2.jpg") no-repeat left top fixed;background-size: cover;width:100%;height:100%;background-repeat:no-repeat;}
+#m-about_us .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-about_us.has-header{top:0;}
+#page-about_us.has-header:before{content:" ";height:44px;display:block}
+#page-about_us.has-header{top:0;}
+#page-about_us.has-header:before{content:" ";height:0;display:block}
+#page-dashboard{background: url("../data/images/background/bg11.jpg") no-repeat left top fixed;background-size: cover;width:100%;height:100%;background-repeat:no-repeat;}
+#m-dpo .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-dpo.has-header{top:0;}
+#page-dpo.has-header:before{content:" ";height:44px;display:block}
+#page-dpo.has-header{top:0;}
+#page-dpo.has-header:before{content:" ";height:0;display:block}
+#m-form_masyarakat_saran .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-form_masyarakat_saran.has-header{top:0;}
+#page-form_masyarakat_saran.has-header:before{content:" ";height:44px;display:block}
+#page-form_masyarakat_saran.has-header{top:0;}
+#page-form_masyarakat_saran.has-header:before{content:" ";height:0;display:block}
+#page-informasi_singles.has-header{top:0;}
+#page-informasi_singles.has-header:before{content:" ";height:0;display:block}
+#m-kritik_saran .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-kritik_saran.has-header{top:0;}
+#page-kritik_saran.has-header:before{content:" ";height:44px;display:block}
+#m-lapor_propam .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-lapor_propam.has-header{top:0;}
+#page-lapor_propam.has-header:before{content:" ";height:44px;display:block}
+#page-opsi{background: url("../data/images/background/bg9.jpg") no-repeat left top fixed;background-size: cover;width:100%;height:100%;background-repeat:no-repeat;}
+#m-opsi .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-opsi.has-header{top:0;}
+#page-opsi.has-header:before{content:" ";height:44px;display:block}
+#page-opsi.has-header{top:0;}
+#page-opsi.has-header:before{content:" ";height:0;display:block}
+#m-ptdh .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-ptdh.has-header{top:0;}
+#page-ptdh.has-header:before{content:" ";height:44px;display:block}
+#page-ptdh.has-header{top:0;}
+#page-ptdh.has-header:before{content:" ";height:0;display:block}
+#m-utama .navbar-title .bar-header{background: transparent;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;}
+#page-utama.has-header{top:0;}
+#page-utama.has-header:before{content:" ";height:44px;display:block}
+#page-utama.has-header{top:0;}
+#page-utama.has-header:before{content:" ";height:0;display:block}
 /** page dashboard **/
 
-#page-dashboard .dashboard-panel .row .col-33 {text-decoration-line: unset;text-align: center;padding: 22px 20px 10px 20px;border:0;}
-#page-dashboard .dashboard-panel .row .col-33 i {font-size: 28px;margin-bottom: 2px;}
-#page-dashboard .dashboard-panel a:link, #page-dashboard .dashboard-panel a:visited{text-decoration: none;}
-#page-dashboard .dashboard-panel .row .col-33 p {font-size: 12px;font-weight:500;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}             
+.dashboard-panel .row .col-33 {text-decoration-line: unset;text-align: center;padding: 22px 20px 10px 20px;border:0;}
+.dashboard-panel .row .col-33 i {font-size: 28px;margin-bottom: 2px;}
+.dashboard-panel a:link, .dashboard-panel a:visited{text-decoration: none;}
+.dashboard-panel .row .col-33 p {font-size: 12px;font-weight:500;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}             
             
+/** page form_laporanmasyarakat **/
+#form_laporanmasyarakat .list .item {border: 0;}
+
+/** page opsi **/
+
 /** page slide_tab_menu **/
 
 /** custom css **/
